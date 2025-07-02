@@ -1,0 +1,11 @@
+body {
+    font-family: sans-serif;
+    background-color: #f0f0ff;
+    margin: 0;
+}
+
+header {
+    background-color: mediumslateblue;
+    color: white;
+    padding: 1px 1em 1px 1em;
+}
