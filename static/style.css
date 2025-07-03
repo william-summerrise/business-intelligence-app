@@ -7,5 +7,17 @@ body {
 header {
     background-color: mediumslateblue;
     color: white;
-    padding: 1px 1em 1px 1em;
+    padding: 1em;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header a {
+    color: white;
+}
+
+main {
+    padding: 1em;
 }
