@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import csv
 import os
+import json
 
 app = Flask(__name__)
 
@@ -31,3 +32,19 @@ def log_usage():
             feedback = 'Service Data Logged!'
 
     return render_template('log-usage.html', feedback=feedback)
+
+@app.route('/api/services')
+def services_api():
+    output = []
+    with open('log/service-data.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            output.append({
+                'name': row[0],
+                'service': row[1],
+                'sector': row[2],
+                'date': row[3]
+            })
+    resp = app.make_response(json.dumps(output, separators=(',', ':')))
+    resp.mimetype = 'text/json'
+    return resp
