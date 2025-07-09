@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home_page') }}">Back to Home</a>
+        <h1>Summary</h1>
+    </header>
+    <main>
+        <p><strong>{{ data|length }}</strong> service usages have been logged so far.</p>
+        <ul>
+            <li>
+                There are <strong>{{ data|map(attribute='service')|unique|list|length }}</strong> unique services logged:
+                <ul>
+                    {% for service in data|map(attribute='service')|unique %}
+                        <li><strong>{{ service }}</strong> with <strong>{{ data|selectattr('service', 'eq', service)|list|length }}</strong> entries</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li>
+                There are <strong>{{ data|map(attribute='sector')|unique|list|length }}</strong> unique sectors logged:
+                <ul>
+                    {% for sector in data|map(attribute='sector')|unique %}
+                        <li><strong>{{ sector }}</strong> with <strong>{{ data|selectattr('sector', 'eq', sector)|list|length }}</strong> entries</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>

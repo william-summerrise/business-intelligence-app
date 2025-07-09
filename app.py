@@ -48,3 +48,18 @@ def services_api():
     resp = app.make_response(json.dumps(output, separators=(',', ':')))
     resp.mimetype = 'text/json'
     return resp
+
+@app.route('/summary')
+def summary():
+    data = []
+    with open('log/service-data.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            data.append({
+                'name': row[0],
+                'service': row[1],
+                'sector': row[2],
+                'date': row[3]
+            })
+
+    return render_template('summary.html', data=data)
