@@ -1,46 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log Service Usage</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header>
-        <a href="{{ url_for('home_page') }}">Back to Home</a>
-        <h1>Log Service Usage</h1>
-    </header>
-    <main>
-        {% if feedback %}
-            <strong>{{ feedback }}</strong>
-        {% else %}
-            Use the following form to log service usage:
-        {% endif %}
+{% extends "layout/sub_base.html" %}
 
-        <form method="post">
-            <p>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </p>
+{% block title %}
+    Log Service Usage
+{% endblock %}
 
-            <p>
-                <label for="service">Service:</label>
-                <input type="text" id="service" name="service" required>
-            </p>
-            
-            <p>
-                <label for="sector">Sector:</label>
-                <input type="text" id="sector" name="sector" required>
-            </p>
-            
-            <p>
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
-            </p>
+{% block main %}
+    {% if feedback %}
+        <strong>{{ feedback }}</strong>
+    {% else %}
+        Use the following form to log service usage:
+    {% endif %}
 
-            <input type="submit">
-        </form>
-    </main>
-</body>
-</html>
+    <form method="post">
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </p>
+
+        <p>
+            <label for="service">Service:</label>
+            <input type="text" id="service" name="service" required>
+        </p>
+        
+        <p>
+            <label for="sector">Sector:</label>
+            <input type="text" id="sector" name="sector" required>
+        </p>
+        
+        <p>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+        </p>
+
+        <input type="submit">
+    </form>
+{% endblock %}

@@ -7,10 +7,21 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
+    """
+        Renders the home page using the index.html template.
+
+        This page has no special logic.
+    """
+
     return render_template('index.html')
 
 @app.route('/log-usage', methods=['GET', 'POST'])
 def log_usage():
+    """
+        Renders the log usage form, with special handling for POST requests that
+        take the submitted form data and writes it to log/service-data.csv
+    """
+
     feedback = None
     if request.method == 'POST':
         # make sure all form inputs exist
@@ -35,6 +46,11 @@ def log_usage():
 
 @app.route('/api/services')
 def services_api():
+    """
+        Handles the services api by reading log/service-data.csv and converting
+        it to a standard JSON format.
+    """
+
     output = []
     with open('log/service-data.csv', 'r') as f:
         reader = csv.reader(f)
@@ -45,12 +61,19 @@ def services_api():
                 'sector': row[2],
                 'date': row[3]
             })
+
     resp = app.make_response(json.dumps(output, separators=(',', ':')))
     resp.mimetype = 'text/json'
     return resp
 
 @app.route('/summary')
 def summary():
+    """
+        Renders the summary page by reading log/service-data.csv.
+
+        The actual summary generation is handled in summary.html, not here.
+    """
+
     data = []
     with open('log/service-data.csv', 'r') as f:
         reader = csv.reader(f)
