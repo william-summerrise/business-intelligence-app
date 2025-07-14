@@ -86,3 +86,15 @@ def summary():
             })
 
     return render_template('summary.html', data=data)
+
+@app.route('/log-engagement', methods=['GET', 'POST'])
+def log_engagement():
+    feedback = None
+    if request.method == 'POST':
+        print(f"""Got engagement data:
+Method: {request.form['method']}
+Time: {request.form['time']}
+Notes: {request.form['notes']}""")
+        feedback = 'Engagement Logged!'
+
+    return render_template('log-engagement.html', feedback=feedback)
