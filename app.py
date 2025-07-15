@@ -91,10 +91,19 @@ def summary():
 def log_engagement():
     feedback = None
     if request.method == 'POST':
-        print(f"""Got engagement data:
-Method: {request.form['method']}
-Time: {request.form['time']}
-Notes: {request.form['notes']}""")
-        feedback = 'Engagement Logged!'
+        if not request.form['method'] or \
+           not request.form['time'] or \
+           not request.form['notes']:
+            feedback = 'There was an error logging form data, make sure you filled in all fields correctly!'
+        else:
+            os.makedirs('log', exist_ok=True)
+            with open('log/engagement.csv', 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([
+                    request.form['method'],
+                    request.form['time'],
+                    request.form['notes']
+                ])
+            feedback = 'Engagement Logged!'
 
     return render_template('log-engagement.html', feedback=feedback)
