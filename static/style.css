@@ -21,3 +21,19 @@ header a {
 main {
     padding: 1em;
 }
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 1em;
+}
+
+caption {
+    font-style: italic;
+    padding: 2px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}

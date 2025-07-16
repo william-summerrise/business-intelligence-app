@@ -107,3 +107,28 @@ def log_engagement():
             feedback = 'Engagement Logged!'
 
     return render_template('log-engagement.html', feedback=feedback)
+
+@app.route('/dashboard')
+def dashboard():
+    usage_data = []
+    with open('log/service-data.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            usage_data.append({
+                'name': row[0],
+                'service': row[1],
+                'sector': row[2],
+                'date': row[3]
+            })
+    
+    engagement_data = []
+    with open('log/engagement.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            engagement_data.append({
+                'method': row[0],
+                'time': row[1],
+                'notes': row[2]
+            })
+
+    return render_template('dashboard.html', usage_data=usage_data, engagement_data=engagement_data)

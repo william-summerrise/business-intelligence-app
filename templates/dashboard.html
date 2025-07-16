@@ -1,0 +1,39 @@
+{% extends "layout/sub_base.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% macro count_table(data, key) %}
+    <table>
+        <caption>
+            Counts by {{ key|title }}
+        </caption>
+        <thead>
+            <tr>
+                <th>{{ key|title }}</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data|map(attribute=key)|unique %}
+                <tr>
+                    <td>{{ item }}</td>
+                    <td>{{ data|selectattr(key, 'eq', item)|list|length }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% block main %}
+    <section>
+        <h2>Usage Counts</h2>
+        {{ count_table(usage_data, 'service') }}
+        {{ count_table(usage_data, 'sector') }}
+    </section>
+    <section>
+        <h2>Engagement Counts</h2>
+        {{ count_table(engagement_data, 'method') }}
+    </section>
+{% endblock %}
