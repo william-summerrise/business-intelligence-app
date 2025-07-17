@@ -1,0 +1,42 @@
+{% extends "layout/sub_base.html" %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block main %}
+    {% if feedback %}
+        <strong>{{ feedback }}</strong>
+    {% else %}
+        Use the following survey to rate your experience with using this app:
+    {% endif %}
+
+    <form method="post">
+        {% macro rate_scale(caption, name, size=5, default=None) %}
+            {% set default = (size // 2) + 1 if default is none %}
+            <fieldset>
+                <legend>{{ caption }}</legend>
+
+                {% for i in range(1, size + 1) %}
+                    <label>
+                        <input type="radio" name="{{ name }}" value="{{ i }}" required {{ 'checked' if i == default }} />
+                        {{ i }}
+                    </label>
+                {% endfor %}
+            </fieldset>
+        {% endmacro %}
+
+        {{ rate_scale('Rate your satisfaction with the app from 1 to 5:', 'satisfaction') }}
+        {{ rate_scale('Rate the ease of use of the app from 1 to 5:', 'ease') }}
+
+        <label>
+            Write any suggestions you have for the app here (optional):
+            <br aria-hidden="true" />
+            <textarea name="suggestions" rows="6" cols="35"></textarea>
+        </label>
+
+        <br aria-hidden="true" />
+
+        <input type="submit">
+    </form>
+{% endblock %}

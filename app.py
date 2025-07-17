@@ -132,3 +132,15 @@ def dashboard():
             })
 
     return render_template('dashboard.html', usage_data=usage_data, engagement_data=engagement_data)
+
+@app.route('/survey', methods=['GET', 'POST'])
+def survey():
+    feedback = None
+    if request.method == 'POST':
+        print('Got survey data:')
+        print('Satisfaction - ' + request.form['satisfaction'])
+        print('Ease of Use - ' + request.form['ease'])
+        print('Suggestions - ' + request.form['suggestions'])
+        feedback = 'Thank you for taking the survey! Your feedback is appreciated.'
+
+    return render_template('survey.html', feedback=feedback)
