@@ -137,10 +137,18 @@ def dashboard():
 def survey():
     feedback = None
     if request.method == 'POST':
-        print('Got survey data:')
-        print('Satisfaction - ' + request.form['satisfaction'])
-        print('Ease of Use - ' + request.form['ease'])
-        print('Suggestions - ' + request.form['suggestions'])
-        feedback = 'Thank you for taking the survey! Your feedback is appreciated.'
+        if not request.form['satisfaction'] or \
+           not request.form['ease']:
+            feedback = 'There was an error logging form data, make sure you filled in all fields correctly!'
+        else:
+            os.makedirs('log', exist_ok=True)
+            with open('log/survey.csv', 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([
+                    request.form['satisfaction'],
+                    request.form['ease'],
+                    request.form['suggestions']
+                ])
+            feedback = 'Thank you for taking the survey! Your feedback is appreciated.'
 
     return render_template('survey.html', feedback=feedback)
